@@ -28,6 +28,14 @@ Your timestamp must be within 30 seconds of the api service time or your request
 Client implementation example:
 * [Client.js](./Client.js)
 
+```js
+const Client = require('./Client')
+// Set these in your ENVironment, or enter them here with the actual string
+const apiKey = ''
+const apiSecret = ''
+const client = Client(apiKey, apiSecret)
+```
+
 ## Accounts
 
 Account resource represents all of a user’s accounts
