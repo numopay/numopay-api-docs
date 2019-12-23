@@ -36,6 +36,8 @@ Account resource represents all of a user’s accounts
 
 Lists current user’s accounts to which the authentication method has access to.
 
+`GET https://api.numopay.com/v2/accounts`
+
 ```js
 await client.api('/v2/accounts')
 
@@ -53,6 +55,8 @@ await client.api('/v2/accounts')
 
 Show current user’s account.
 
+`GET https://api.numopay.com/v2/accounts/:account_id`
+
 ```js
 await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c')
 
@@ -68,6 +72,8 @@ await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c')
 
 Show current balance on the user’s account at the current moment.
 
+`GET https://api.numopay.com/v2/accounts/:account_id/balance`
+
 ```js
 await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/balance')
 
@@ -80,6 +86,8 @@ await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/balance')
 ```
 
 ## Create charge token
+
+`POST https://api.numopay.com/v2/accounts/:account_id/charge/token`
 
 ```js
 await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/charge/token', {method: 'POST', parameters: {amount: '100', redirect_url: 'https://example.com'}})
@@ -98,6 +106,8 @@ await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/charge/token
 | amount | Amount (in kopecks) | string |
 
 ## Charge money
+
+`POST https://api.numopay.com/v2/accounts/:account_id/charge`
 
 Charge money from card
 
@@ -119,6 +129,8 @@ await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/charge', {me
 ## Show payment status
 
 The method can be used to request the payment status.
+
+`GET https://api.numopay.com/v2/accounts/:account_id/payment/:order_slug`
 
 ```js
 await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/payment/client_wof_34101_8e4001br')
@@ -175,6 +187,8 @@ await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/payment/clie
 
 ## Create refill token
 
+`POST https://api.numopay.com/v2/accounts/:account_id/refill/token`
+
 ```js
 await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/refill/token', {method: 'POST', parameters: {amount: '100', redirect_url: "https://example.com"}})
 
@@ -193,6 +207,8 @@ await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/refill/token
 ## Refill money
 
 Refill money to card
+
+`POST https://api.numopay.com/v2/accounts/:account_id/refill`
 
 ```js
 await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/refill', {method: 'POST', parameters: {token: '343444b5-1b19-4d4f-b1d5-30e435482da5', card_number: "4444555566667777"}})
@@ -214,6 +230,8 @@ await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/refill', {me
 Get the API server time.
 
 This endpoint doesn’t require authentication.
+
+`GET https://api.numopay.com/v2/time`
 
 ```js
 await client.api('/v2/time')
