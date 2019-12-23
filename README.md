@@ -89,6 +89,11 @@ await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/balance')
 
 `POST https://api.numopay.com/v2/accounts/:account_id/charge/token`
 
+| POST params | description | type |
+|--:|--:|--:|
+| redirect_url | Link to the page to which the user will get after entering 3dsec | string |
+| amount | Amount (in kopecks) | string |
+
 ```js
 await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/charge/token', {method: 'POST', parameters: {amount: '100', redirect_url: 'https://example.com'}})
 
@@ -100,16 +105,16 @@ await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/charge/token
 }
 ```
 
-| POST params | description | type |
-|--:|--:|--:|
-| redirect_url | Link to the page to which the user will get after entering 3dsec | string |
-| amount | Amount (in kopecks) | string |
-
 ## Charge money
 
 `POST https://api.numopay.com/v2/accounts/:account_id/charge`
 
 Charge money from card
+
+| POST params | description | type |
+|--:|--:|--:|
+| token | The token required to request this method. Life time is 15 minutes. Number of attempts - 1 | string |
+| card_info | Card information | object |
 
 ```js
 await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/charge', {method: 'POST', parameters: {token: '1f5146dd-9149-42f1-83d8-9470adb04529', card_info: {number: '4444555566667777', month: '12', year: '2021', cvv: '123', holder: 'NUMO PAY'}}})
@@ -120,11 +125,6 @@ await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/charge', {me
   }
 }
 ```
-
-| POST params | description | type |
-|--:|--:|--:|
-| token | The token required to request this method. Life time is 15 minutes. Number of attempts - 1 | string |
-| card_info | Card information | object |
 
 ## Show payment status
 
@@ -189,6 +189,11 @@ await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/payment/clie
 
 `POST https://api.numopay.com/v2/accounts/:account_id/refill/token`
 
+| POST params | description | type |
+|--:|--:|--:|
+| redirect_url | Link to the page to which the user will get after entering 3dsec | string |
+| amount | Amount (in kopecks) | string |
+
 ```js
 await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/refill/token', {method: 'POST', parameters: {amount: '100', redirect_url: "https://example.com"}})
 
@@ -199,16 +204,16 @@ await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/refill/token
 }
 ```
 
-| POST params | description | type |
-|--:|--:|--:|
-| redirect_url | Link to the page to which the user will get after entering 3dsec | string |
-| amount | Amount (in kopecks) | string |
-
 ## Refill money
 
 Refill money to card
 
 `POST https://api.numopay.com/v2/accounts/:account_id/refill`
+
+| POST params | description | type |
+|--:|--:|--:|
+| token | The token required to request this method. Life time is 15 minutes. Number of attempts - 1 | string |
+| card_number | Card number | string |
 
 ```js
 await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/refill', {method: 'POST', parameters: {token: '343444b5-1b19-4d4f-b1d5-30e435482da5', card_number: "4444555566667777"}})
@@ -219,11 +224,6 @@ await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/refill', {me
   }
 }
 ```
-
-| POST params | description | type |
-|--:|--:|--:|
-| token | The token required to request this method. Life time is 15 minutes. Number of attempts - 1 | string |
-| card_number | Card number | string |
 
 ## Get current time
 
