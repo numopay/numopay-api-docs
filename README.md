@@ -2,6 +2,21 @@
 
 This repo contains the official Numopay API documentation
 
+## Contents
+
+- [Authentication](#authentication)
+- [Accounts](#accounts)
+- [List accounts](#list-accounts)
+- [Show an account](#show-an-account)
+- [Show account balance](#show-account-balance)
+- [Create charge token](#create-charge-token)
+- [Charge money](#charge-money)
+- [Show payment status](#show-payment-status)
+    + [State code errors](#state-code-errors)
+- [Create refill token](#create-refill-token)
+- [Refill money](#refill-money)
+- [Get current time](#get-current-time)
+
 ## Authentication
 
 All API key requests must be signed and contain the authorization header:
