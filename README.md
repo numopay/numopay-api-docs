@@ -21,10 +21,12 @@ The `timestamp` MUST be number of seconds since [Unix Epoch](https://en.wikipedi
 
 The `query` must be sorted by query parameter names
 
+The `version` is string `2019-12-22`
+
 Your timestamp must be within 30 seconds of the api service time or your request will be considered expired and rejected. We recommend using the [time](#get-current-time) endpoint to query for the API server time if you believe there many be time skew between your server and the API servers.
 
 Client implementation example:
-* [...]
+* [Client.js](./Client.js)
 
 ## Accounts
 
