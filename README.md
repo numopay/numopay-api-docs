@@ -175,7 +175,7 @@ await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/payment/clie
 
 | Response field | Description |
 |--:|--:|
-| order_id |	Unique identifier for the operation |
+| order_slug |	Unique identifier for the operation |
 | is_completed |	Operation completion status |
 | status | Transaction status |
 | type |	Type of transaction (refill_unregistered \| charge_unregistered) |
