@@ -34,7 +34,7 @@ The `method` should be UPPER CASE.
 
 The `timestamp` MUST be number of seconds since [Unix Epoch](https://en.wikipedia.org/wiki/Unix_time).
 
-The `query` must be sorted by query parameter names
+The `query` must be sorted by query parameter names and started with '?' or omitted if there is no query params in request
 
 The `version` is string `2019-12-22`
 
