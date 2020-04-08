@@ -14,7 +14,12 @@ This repo contains the official Numopay API documentation
 - [Show payment status](#show-payment-status)
     + [State code errors](#state-code-errors)
 - [Create refill token](#create-refill-token)
-- [Refill money](#refill-money)
+- [Refill](#refill)
+- [Create webhook-endpoint](#create-webhook-endpoint)
+- [Update webhook-endpoint](#update-webhook-endpoint)
+- [List webhook-endpoints](#list-webhook-endpoints)
+- [Delete webhook-endpoint](#delete-webhook-endpoint)
+- [Webhook Event](#webhook-event)
 - [Get current time](#get-current-time)
 
 ## Authentication
@@ -48,7 +53,7 @@ const Client = require('./Client')
 // Set these in your ENVironment, or enter them here with the actual string
 const apiKey = ''
 const apiSecret = ''
-const client = Client(apiKey, apiSecret)
+const client = new Client(apiKey, apiSecret)
 ```
 
 ## Accounts
@@ -102,7 +107,7 @@ await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/balance')
 
 {
   "data": {
-    "amount": "444.44",
+    "amount": "44444",
     "currency": "RUB"
   }
 }
@@ -222,14 +227,15 @@ await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/refill/token
 
 {
   "data": {
-    "token": "343444b5-1b19-4d4f-b1d5-30e435482da5"
+    "token": "343444b5-1b19-4d4f-b1d5-30e435482da5",
+    "order_slug": "client_frg_345678_888e8e8e8e"
   }
 }
 ```
 
-## Refill money
+## Refill
 
-Refill money to card
+Refill to card
 
 `POST https://api.numopay.com/v2/accounts/:account_id/refill`
 
@@ -245,6 +251,88 @@ await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/refill', {me
   "data": {
     "token": "343444b5-1b19-4d4f-b1d5-30e435482da5"
   }
+}
+```
+
+## Create webhook-endpoint
+
+`POST https://api.numopay.com/v2/accounts/:account_id/webhook-endpoints`
+
+```js
+await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/webhook-endpoints', {method: 'POST', parameters: {url: 'https://example.com/webhook/secret', event: 'order'}})
+
+{
+  "data": {
+    "id": "4db138f8-ea4f-4093-ba61-b948c7e75b8d",
+    "url": "https://example.com/webhook/secret",
+    "event": "order",
+    "created_at": "2020-04-08T14:12:03.084Z",
+    "updated_at": "2020-04-08T14:12:03.084Z"
+  }
+}
+```
+
+## Update webhook-endpoint
+
+`PUT https://api.numopay.com/v2/accounts/:account_id/webhook-endpoints/:id`
+
+```js
+await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/webhook-endpoints/4db138f8-ea4f-4093-ba61-b948c7e75b8d', {method: 'PUT', parameters: {url: 'https://example.com/webhook2/secret2', event: 'order'}})
+
+{
+  "data": {
+    "id": "4db138f8-ea4f-4093-ba61-b948c7e75b8d",
+    "url": "https://example.com/webhook2/secret2",
+    "event": "order",
+    "created_at": "2020-04-08T14:12:03.084Z",
+    "updated_at": "2020-04-08T14:18:32.440Z"
+  }
+}
+```
+
+## List webhook-endpoints
+
+`GET https://api.numopay.com/v2/accounts/:account_id/webhook-endpoints`
+
+```js
+await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/webhook-endpoints')
+
+{
+  "data": [
+    {
+      "id": "4db138f8-ea4f-4093-ba61-b948c7e75b8d",
+      "url": "https://example.com/webhook2/secret2",
+      "event": "order",
+      "created_at": "2020-04-08T14:12:03.084Z",
+      "updated_at": "2020-04-08T14:18:32.440Z"
+    ],
+  }
+}
+```
+
+## Delete webhook-endpoint
+
+`DELETE https://api.numopay.com/v2/accounts/:account_id/webhook-endpoints/:id`
+
+```js
+await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/webhook-endpoints/4db138f8-ea4f-4093-ba61-b948c7e75b8d', {method: 'DELETE'})
+
+{
+  "data": {
+    "id": "4db138f8-ea4f-4093-ba61-b948c7e75b8d"
+  }
+}
+```
+
+## Webhook Event
+
+```js
+{
+  "type": "order",
+  "data": {
+    // ... 'Show payment status' data
+  },
+  "event_at": "2020-04-08T14:12:03.084Z"
 }
 ```
 
