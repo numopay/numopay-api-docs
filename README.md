@@ -235,7 +235,7 @@ await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/refill/token
 
 ## Refill
 
-Refill to card
+Refill card
 
 `POST https://api.numopay.com/v2/accounts/:account_id/refill`
 
@@ -305,8 +305,8 @@ await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/webhook-endp
       "event": "order",
       "created_at": "2020-04-08T14:12:03.084Z",
       "updated_at": "2020-04-08T14:18:32.440Z"
-    ],
-  }
+    }
+  ]
 }
 ```
 
