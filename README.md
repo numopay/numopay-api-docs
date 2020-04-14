@@ -213,6 +213,18 @@ await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/payment/clie
 | 25 |	Карта изъята |
 | 26 |	Карта не найдена |
 
+#### Statuses
+
+| status | description |
+|--:|--:|
+| new | An operation request has been created
+| pending | The operation is in process. Processing an operation takes 1-2 minutes
+| hold | Holding operation. Cash successfully frozen on customer card
+| error | Operation error. The error description will be returned in the notification or 'Show payment status' method
+| expired | The order has expired. Can happend if the operation has not been completed
+| success | Successful operation
+| canceled | The operation is canceled. The status is used for holding operations and charging from the card
+
 ## Create refill token
 
 `POST https://api.numopay.com/v2/accounts/:account_id/refill/token`
