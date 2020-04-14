@@ -219,11 +219,10 @@ await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/payment/clie
 
 | POST params | description | type |
 |--:|--:|--:|
-| redirect_url | Link to the page to which the user will get after entering 3dsec | string |
 | amount | Amount (in kopecks) | string |
 
 ```js
-await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/refill/token', {method: 'POST', parameters: {amount: '100', redirect_url: "https://example.com"}})
+await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/refill/token', {method: 'POST', parameters: {amount: '100'}})
 
 {
   "data": {
