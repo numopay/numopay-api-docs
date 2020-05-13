@@ -15,6 +15,7 @@ This repo contains the official Numopay API documentation
     + [State code errors](#state-code-errors)
 - [Create refill token](#create-refill-token)
 - [Refill](#refill)
+- [List transactions](#list-transactions)
 - [Create webhook-endpoint](#create-webhook-endpoint)
 - [Update webhook-endpoint](#update-webhook-endpoint)
 - [List webhook-endpoints](#list-webhook-endpoints)
@@ -262,6 +263,32 @@ await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/refill', {me
   "data": {
     "token": "343444b5-1b19-4d4f-b1d5-30e435482da5"
   }
+}
+```
+
+## List transactions
+
+The transactions are sorted in descending order by creation date
+
+`GET https://api.numopay.com/v2/accounts/:account_id/transactions`
+
+| GET query params | description | type |
+|--:|--:|--:|
+| from | Return results where created_at >= from | ISO 8601 datetime (query) |
+| to | Return results where created_at < to | ISO 8601 datetime (query) |
+| limit | A limit on the number of objects to be returned. Limit can range between 0 and 100, and the default is 10. | int (query) |
+| offset | Offset | int (query) |
+
+```js
+await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/transactions')
+
+{
+  "data": [
+    {
+      // ... 'Show payment status' data
+    },
+    //...
+  ]
 }
 ```
 
