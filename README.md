@@ -21,6 +21,9 @@ This repo contains the official Numopay API documentation
 - [List webhook-endpoints](#list-webhook-endpoints)
 - [Delete webhook-endpoint](#delete-webhook-endpoint)
 - [Webhook Event](#webhook-event)
+- [Checkout](#checkout)
+    + [Create checkout session (Server-side)](#create-checkout-session-server-side)
+    + [Get payment page url and redirect (Client-side)](#get-payment-page-url-and-redirect-client-side)
 - [Get current time](#get-current-time)
 
 ## Authentication
@@ -174,7 +177,8 @@ await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/payment/clie
     "currency": "RUB",
     "card_number": "4444********7777",
     "state_code": 0,
-    "state_description": "Нет ошибки"
+    "state_description": "Нет ошибки",
+    "checkout_session_id": null
   }
 }
 ```
@@ -189,7 +193,8 @@ await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/payment/clie
 | currency |	Transaction currency (now only RUB) |
 | card_number |	Masked card number |
 | state_code |	Error code |
-| state_description |	Error description |
+| state_description |   Error description |
+| checkout_session_id | Checkout session id |
 
 #### State code errors
 
@@ -372,6 +377,86 @@ await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/webhook-endp
   },
   "event_at": "2020-04-08T14:12:03.084Z"
 }
+```
+
+## Checkout
+
+### Create checkout session (Server-side)
+
+`POST https://api.numopay.com/v2/accounts/:account_id/checkout/sessions`
+
+| POST params | description | type |
+|--:|--:|--:|
+| items[].name | The name of the item | string |
+| items[].description | An arbitrary string attached to the object. Often useful for displaying to users | string (optional) |
+| items[].images | A list of up to 1 URLs of images for this product, meant to be displayable to the customer | [string] (optional) |
+| items[].amount | Amount for the display item (in kopecks) | string |
+| items[].currency | Three-letter ISO currency code, in uppercase. Must be a supported currency | string |
+| success_url | The URL the customer will be directed to after the payment or subscription creation is successful | string |
+| cancel_url | The URL the customer will be directed to if they decide to cancel payment and return to your website | string |
+
+```js
+await client.api(`/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/checkout/sessions`, {
+  method: 'POST',
+  parameters: {
+    items: [{
+      name: 'T-shirt',
+      description: 'Comfortable cotton t-shirt',
+      images: ['https://example.com/t-shirt.jpg'],
+      amount: '150000',
+      currency: 'RUB',
+    }],
+    success_url: 'https://example.com/success',
+    cancel_url: 'https://example.com/cancel'
+  },
+})
+
+{
+  "data": {
+    "id": "cs_live_PMu7i5WN4NcUbm7HpqZCyXqRVPAsxwJUVZZKwQ6yzWFgsoXwhycfDgje",
+    "token": "3b7988e2-dea1-4580-8ce2-a51aec128468",
+    "items": [
+      {
+        "name": "T-shirt",
+        "description": "Comfortable cotton t-shirt",
+        "images": [
+          "https://example.com/t-shirt.jpg"
+        ],
+        "amount": "150000",
+        "currency": "RUB"
+      }
+    ],
+    "success_url": "https://example.com/success",
+    "cancel_url": "https://example.com/cancel"
+  }
+}
+```
+
+### Get payment page url and redirect (Client-side)
+
+`POST https://api.numopay.com/v2/payment-pages`
+
+| POST params | description | type |
+|--:|--:|--:|
+| key | account publishable key | string |
+| session_id | checkout session id | string |
+| session_token | checkout session token | string |
+
+```js
+const res = await fetch(`https://api.numopay.com/v2/payment-pages`, {
+  method: 'POST',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    key: 'pk_live_SaSeTdqb2YNhRDjtQhMniaTDikgnHoyo8r0tcqGTyzgZtJ2e5AehZ5X0',
+    session_id: 'cs_live_PMu7i5WN4NcUbm7HpqZCyXqRVPAsxwJUVZZKwQ6yzWFgsoXwhycfDgje',
+    session_token: '3b7988e2-dea1-4580-8ce2-a51aec128468',
+  }),
+})
+const {data} = await res.json()
+window.location = data.url
 ```
 
 ## Get current time
