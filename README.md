@@ -22,8 +22,8 @@ This repo contains the official Numopay API documentation
 - [Delete webhook-endpoint](#delete-webhook-endpoint)
 - [Webhook Event](#webhook-event)
 - [Checkout](#checkout)
-    + [Create checkout session (Server-side)](#create-checkout-session-server-side)
-    + [Get payment page url and redirect (Client-side)](#get-payment-page-url-and-redirect-client-side)
+    + [Create a Checkout Session (Server-side)](#create-a-checkout-session-server-side)
+    + [Redirect to Checkout (Client-side)](#redirect-to-checkout-client-side)
 - [Get current time](#get-current-time)
 
 ## Authentication
@@ -381,7 +381,7 @@ await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/webhook-endp
 
 ## Checkout
 
-### Create checkout session (Server-side)
+### Create a Checkout Session (Server-side)
 
 `POST https://api.numopay.com/v2/accounts/:account_id/checkout/sessions`
 
@@ -432,7 +432,7 @@ await client.api(`/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/checkout/ses
 }
 ```
 
-### Get payment page url and redirect (Client-side)
+### Redirect to Checkout (Client-side)
 
 `POST https://api.numopay.com/v2/payment-pages`
 
