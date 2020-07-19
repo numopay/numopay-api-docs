@@ -124,7 +124,8 @@ await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/balance')
 | POST params | description | type |
 |--:|--:|--:|
 | redirect_url | Link to the page to which the user will get after entering 3dsec | string |
-| amount | Amount (in kopecks) | string |
+| amount | Original amount (in smallest common currency units; Ex. kopecks) | string |
+| currency | Original transaction currency. Three-letter ISO currency code, in uppercase. Must be a supported currency. The default is account currency. | string (optional) |
 
 ```js
 await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/charge/token', {method: 'POST', parameters: {amount: '100', redirect_url: 'https://example.com'}})
@@ -178,7 +179,9 @@ await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/payment/clie
     "card_number": "4444********7777",
     "state_code": 0,
     "state_description": "Нет ошибки",
-    "checkout_session_id": null
+    "checkout_session_id": null,
+    "original_amount": "100",
+    "original_currency": "RUB"
   }
 }
 ```
@@ -190,11 +193,13 @@ await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/payment/clie
 | status | Transaction status |
 | type |	Type of transaction (refill_unregistered \| charge_unregistered) |
 | amount |	Charge amount (in kopecks) |
-| currency |	Transaction currency (now only RUB) |
+| currency |	Transaction currency that equals account currency (now only RUB) |
 | card_number |	Masked card number |
 | state_code |	Error code |
 | state_description |   Error description |
 | checkout_session_id | Checkout session id |
+| original_amount | Charge amount before conversion to the account currency (in smallest common currency units; Ex. kopecks) |
+| original_currency | Transaction currency before conversion to the account currency |
 
 #### State code errors
 
@@ -237,7 +242,8 @@ await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/payment/clie
 
 | POST params | description | type |
 |--:|--:|--:|
-| amount | Amount (in kopecks) | string |
+| amount | Original amount (in smallest common currency units; Ex. kopecks) | string |
+| currency | Original transaction currency. Three-letter ISO currency code, in uppercase. Must be a supported currency. The default is account currency. | string (optional) |
 
 ```js
 await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/refill/token', {method: 'POST', parameters: {amount: '100'}})
