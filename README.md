@@ -500,7 +500,7 @@ await client.api(`/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/rates/latest
       "INR": "86.866",
       "ISK": "157.8",
       "JPY": "123.36",
-      "KRW: "1396.83",
+      "KRW": "1396.83",
       "MXN": "26.0804",
       "MYR": "4.9502",
       "NOK": "10.6953",
