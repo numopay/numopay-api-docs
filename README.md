@@ -24,6 +24,7 @@ This repo contains the official Numopay API documentation
 - [Checkout](#checkout)
     + [Create a Checkout Session (Server-side)](#create-a-checkout-session-server-side)
     + [Redirect to Checkout (Client-side)](#redirect-to-checkout-client-side)
+- [List rates](#list-rates)
 - [Get current time](#get-current-time)
 
 ## Authentication
@@ -396,7 +397,7 @@ await client.api('/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/webhook-endp
 | items[].name | The name of the item | string |
 | items[].description | An arbitrary string attached to the object. Often useful for displaying to users | string (optional) |
 | items[].images | A list of up to 1 URLs of images for this product, meant to be displayable to the customer | [string] (optional) |
-| items[].amount | Amount for the display item (in kopecks) | string |
+| items[].amount | Amount for the display item (in smallest common currency units; Ex. kopecks) | string |
 | items[].currency | Three-letter ISO currency code, in uppercase. Must be a supported currency | string |
 | success_url | The URL the customer will be directed to after the payment or subscription creation is successful | string |
 | cancel_url | The URL the customer will be directed to if they decide to cancel payment and return to your website | string |
@@ -463,6 +464,60 @@ const res = await fetch(`https://api.numopay.com/v2/payment-pages`, {
 })
 const {data} = await res.json()
 window.location = data.url
+```
+
+## List rates
+
+`GET https://api.numopay.com/v2/accounts/:account_id/rates/latest`
+
+| GET query params | description | type |
+|--:|--:|--:|
+| base | Base currency. Three-letter ISO currency code, in uppercase. Must be a supported currency. Default is "EUR" | string (optional) |
+| amount | Amount to show rates referring to (in smallest common currency units; Ex. kopecks). Default is "100" (€1) | string (optional) |
+
+```js
+await client.api(`/v2/accounts/423e5010-24d7-11ea-a0af-ad4afa2c683c/rates/latest`)
+
+{
+  "data": {
+    "base": "EUR",
+    "date": "2020-07-24",
+    "rates": {
+      "AUD": "1.6376",
+      "BGN": "1.9558",
+      "BRL": "6.0777",
+      "CAD": "1.5578",
+      "CHF": "1.073",
+      "CNY": "8.1453",
+      "CZK": "26.268",
+      "DKK": "7.4438",
+      "GBP": "0.90985",
+      "HKD": "8.9978",
+      "HRK": "7.517",
+      "HUF": "346.98",
+      "IDR": "16982",
+      "ILS": "3.9642",
+      "INR": "86.866",
+      "ISK": "157.8",
+      "JPY": "123.36",
+      "KRW: "1396.83",
+      "MXN": "26.0804",
+      "MYR": "4.9502",
+      "NOK": "10.6953",
+      "NZD": "1.7506",
+      "PHP": "57.316",
+      "PLN": "4.4046",
+      "RON": "4.8325",
+      "RUB": "83.3938",
+      "SEK": "10.269",
+      "SGD": "1.6083",
+      "THB": "36.821",
+      "TRY": "7.9496",
+      "USD": "1.1608",
+      "ZAR": "19.435"
+    }
+  }
+}
 ```
 
 ## Get current time
